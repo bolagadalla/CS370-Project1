@@ -2,32 +2,32 @@ package BankActions;
 
 import java.util.ArrayList;
 
+import Default.Actions;
 import Default.User;
 import Observers.MyObservable;
 import Observers.MyObserver;
 
 public class BankActions implements MyObservable {
-	
-	private User currentUserUsingBank;
 	private ArrayList<MyObserver> observers;
+	/*
+	 * List of all possible actions that can be taken at the moment
+	 * i.e.
+	 * 1) Deposit <-- 1 possible action
+	 * 2) Withdraw
+	 * 3) Transfer
+	 * */
+	private ArrayList<Actions> actionsToTake;
 	
 	public BankActions(User currentUser)
 	{
-		setCurrentUserUsingBank(currentUser);
 		observers = new ArrayList<MyObserver>();
+		actionsToTake = new ArrayList<Actions>();
 	}
 	
-	/*
-	 * Banks Have The Following Actions
-	 * 
-	 * Create Account
-	 * Login To Account
-	 * Deposit
-	 * Withdraw
-	 * Transfer
-	 * Pay Credit Card
-	 * 
-	 */
+	public void TakeAction(int actionIndex)
+	{
+		actionsToTake.get(actionIndex);
+	}
 
 	@Override
 	public void notifyListeners(String actions) {
@@ -44,14 +44,6 @@ public class BankActions implements MyObservable {
 	@Override
 	public void removeListener(MyObserver observer) {
 		observers.remove(observer);
-	}
-
-	public User getCurrentUserUsingBank() {
-		return currentUserUsingBank;
-	}
-
-	public void setCurrentUserUsingBank(User currentUserUsingBank) {
-		this.currentUserUsingBank = currentUserUsingBank;
 	}
 
 }

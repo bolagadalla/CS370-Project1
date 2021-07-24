@@ -1,13 +1,20 @@
 package BankActions;
 
-import Observers.MyObserver;
+import Default.Actions;
 
-public class PayCreditAction implements MyObserver {
+public class PayCreditAction implements Actions {
 
 	@Override
-	public void update(String action) {
+	public boolean Check() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public void Action() {
 		// TODO Auto-generated method stub
 		
 	}
+
 
 }

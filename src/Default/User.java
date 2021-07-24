@@ -1,5 +1,7 @@
 package Default;
 
+import java.util.Random;
+
 import AccountsFactory.AccountType;
 
 public class User {
@@ -8,6 +10,11 @@ public class User {
 	private String[] name;
 	private String creditScore;
 	private String password;
+	
+	public User()
+	{
+		accountNumber = generateAccountNumber();
+	}
 	
 	public AccountType getAccountType() {
 		return accountType;
@@ -42,5 +49,11 @@ public class User {
 	}
 	public void setPassword(String password) {
 		this.password = password;
+	}
+	
+	private String generateAccountNumber()
+	{
+		Random random = new Random();
+		return Integer.toString(random.nextInt(0) + 9999);
 	}
 }

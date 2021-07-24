@@ -5,6 +5,8 @@ import java.util.HashMap;
 public class Bank {
 	static Bank bank = new Bank();
 	static HashMap<String, User> users = new HashMap<String, User>();
+	private User currentUserUsingBank;
+
 	private Bank() {
 		// READ JSON FILE FOR ALL THE ACCOUNTS
 	}
@@ -26,6 +28,11 @@ public class Bank {
 	public static User getUser(String userID)
 	{
 		return users.get(userID);
+	}
+	
+	public static boolean checkUserExist(String userID)
+	{
+		return users.containsKey(userID);
 	}
 	
 	public static boolean AddNewUser(String userID, User user)
