@@ -1,4 +1,4 @@
-package Default;
+package BankActions;
 
 public interface Actions {
 	boolean Check();

@@ -4,9 +4,8 @@ import java.util.Scanner;
 
 import AccountsFactory.CreditCard;
 import AccountsFactory.DebitCard;
-import Default.Actions;
-import Default.Bank;
 import Default.User;
+import Singletons.Bank;
 
 public class CreateAccountAction implements Actions {
 	

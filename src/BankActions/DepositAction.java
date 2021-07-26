@@ -1,7 +1,5 @@
 package BankActions;
 
-import Default.Actions;
-
 public class DepositAction implements Actions {
 
 	@Override
