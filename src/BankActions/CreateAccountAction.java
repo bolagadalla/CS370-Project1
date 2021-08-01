@@ -6,10 +6,17 @@ import AccountsFactory.CreditCard;
 import AccountsFactory.DebitCard;
 import Default.User;
 import Singletons.Bank;
+import Singletons.TerminalPrinter;
+import StateMachine.Banking;
 
 public class CreateAccountAction implements Actions {
 	
 	User newUser = new User();
+	BankActions bankActions;
+	
+	public CreateAccountAction(BankActions bankActions) {
+		this.bankActions = bankActions;
+	}
 	
 	@Override
 	public boolean Check() {
@@ -27,30 +34,46 @@ public class CreateAccountAction implements Actions {
 		// If it doesnt exit then it will continue to here
 		// We add the new user to the bank and make them the currentUserUsingBank
 		Bank.AddNewUser(newUser.getAccountNumber(), newUser);
+		TerminalPrinter.PrintLine("Your new balance is: $" + newUser.getAccountType().getBalance());
+		Bank.setCurrentUserUsingBank(newUser); // Sets the current user
+		bankActions.SetCurrentBankState(new Banking(bankActions)); // Goes to next state
 	}
 	
 	public void AskForUserInfo()
 	{
 		Scanner scan = new Scanner(System.in);
-		System.out.println("Which account would you like to open?");
-		System.out.println("1) Checking Account");
-		System.out.println("2) Credit Account");
+		//--------------------------------OPENING AN ACCOUNT----------------------------------\\
+		TerminalPrinter.PrintOptions("Which account would you like to open?", "Checking Account", "Credit Account");
 		int accountType = scan.nextInt();
 		
 		switch (accountType) {
 		case 1: {
-			System.out.println("What would be your initial deposit");
+			TerminalPrinter.PrintLine("What would be your initial deposit");
 			double initialAmount = scan.nextDouble();
 			newUser.setAccountType(new DebitCard(initialAmount));
 		}
 		case 2: {
-			System.out.println("What is your current Credit Score?");
+			TerminalPrinter.PrintLine("What is your current Credit Score?");
 			int creditScore = scan.nextInt();
 			newUser.setAccountType(new CreditCard(CalculateCreditLimitAmount(creditScore)));
 		}
-		default:
-			throw new IllegalArgumentException("Unexpected value: " + accountType);
+		
 		}
+		//--------------------------------ASKING PERSONAL INFO--------------------------------\\		
+		
+		TerminalPrinter.PrintLine("What is your full name?");
+		String[] name = {"", ""};
+		name[0] = (String) scan.next().strip();
+		name[1] = scan.hasNext() ? (String) scan.next().strip() : "";
+		newUser.setName(name);
+		
+		
+		String username = name[0].toLowerCase() + name[1].toLowerCase() + Integer.toString((int)(Math.random()*(99-0+1)+0));
+		TerminalPrinter.PrintLine("Your Username will now be: " + username);
+		newUser.setUsername(username);
+		
+		TerminalPrinter.PrintLine("Type a Password for your account: ");
+		newUser.setPassword((String) scan.next().strip());
 	}
 	
 	public double CalculateCreditLimitAmount(int creditScore)
@@ -69,5 +92,11 @@ public class CreateAccountAction implements Actions {
 		}
 		
 		return (creditScore * 3) - ((creditScore * 3) * (maximumSubtractionFromCreditLimit / 100));
+	}
+
+	@Override
+	public String[] getMessage() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

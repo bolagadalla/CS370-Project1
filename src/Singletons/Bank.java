@@ -7,8 +7,7 @@ import Default.User;
 public class Bank {
 	static Bank bank = new Bank();
 	static HashMap<String, User> users = new HashMap<String, User>();
-	@SuppressWarnings("unused")
-	private User currentUserUsingBank;
+	static User currentUserUsingBank;
 
 	private Bank() {
 		// READ JSON FILE FOR ALL THE ACCOUNTS
@@ -46,5 +45,13 @@ public class Bank {
 			return true;
 		}
 		return false;
+	}
+
+	public static User getCurrentUserUsingBank() {
+		return currentUserUsingBank;
+	}
+
+	public static void setCurrentUserUsingBank(User currentUserUsingBank) {
+		Bank.currentUserUsingBank = currentUserUsingBank;
 	}
 }

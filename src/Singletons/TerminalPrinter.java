@@ -4,7 +4,7 @@ import java.util.concurrent.TimeUnit;
 
 public class TerminalPrinter {
 	static TerminalPrinter printer = new TerminalPrinter();
-	
+	static int numMilSec = 0;
 	private TerminalPrinter() {}
 	
 	public static TerminalPrinter getInstance()
@@ -15,7 +15,7 @@ public class TerminalPrinter {
 	/**
 	 * Prints a Welcome Banner to the terminal. 
 	 * */
-	public void PrintWelcome()
+	public static void PrintWelcome()
 	{
 		String[] lines = {"+--------------------------------+",
 				          "|      Welcome To Java Bank      |",
@@ -26,7 +26,7 @@ public class TerminalPrinter {
 				Typer(5, lines[i]);
 				continue;
 			}
-			Typer(40, lines[i]);
+			Typer(numMilSec, lines[i]);
 		}
 		System.out.println();
 	}
@@ -40,12 +40,12 @@ public class TerminalPrinter {
 	 * 		  i.e. PrintOptions("Some Prompt", "Option 1", "Option 2", ..., "Option n")
 	 * 
 	 */
-	public void PrintOptions(String prompt, String...options)
+	public static void PrintOptions(String prompt, String...options)
 	{
-		Typer(40, prompt);
+		Typer(numMilSec, prompt);
 		
 		for (int i = 0; i < options.length; i++) {
-			Typer(40, (i + 1) + ") " + options[i]);
+			Typer(numMilSec, (i + 1) + ") " + options[i]);
 		}
 	}
 
@@ -60,7 +60,7 @@ public class TerminalPrinter {
 	 * 		  i.e. PrintOptions("Some Prompt", "Option 1", "Option 2", ..., "Option n")
 	 * 
 	 */
-	public void PrintOptions(int milSecsBetweenChars, String prompt, String...options)
+	public static void PrintOptions(int milSecsBetweenChars, String prompt, String...options)
 	{
 		Typer(milSecsBetweenChars, prompt);
 		
@@ -74,9 +74,9 @@ public class TerminalPrinter {
 	 * @param line - The line that should be printed out.
 	 * 
 	 * */
-	public void PrintLine(String line)
+	public static void PrintLine(String line)
 	{
-		Typer(40, line);
+		Typer(numMilSec, line);
 	}
 
 	/**
@@ -85,7 +85,7 @@ public class TerminalPrinter {
 	 * @param line - The line that should be printed out.
 	 * 
 	 * */
-	public void PrintLine(int milSecsBetweenChars, String line)
+	public static void PrintLine(int milSecsBetweenChars, String line)
 	{
 		Typer(milSecsBetweenChars, line);
 	}

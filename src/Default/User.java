@@ -1,13 +1,12 @@
 package Default;
 
-import java.util.Random;
-
 import AccountsFactory.AccountType;
 
 public class User {
 	private AccountType accountType;
 	private String accountNumber;
 	private String[] name;
+	private String username;
 	private String creditScore;
 	private String password;
 	
@@ -53,7 +52,14 @@ public class User {
 	
 	private String generateAccountNumber()
 	{
-		Random random = new Random();
-		return Integer.toString(random.nextInt(0) + 9999);
+		return Integer.toString((int)(Math.random()*(9999-0+1)+0));
+	}
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
 	}
 }

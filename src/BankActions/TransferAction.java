@@ -14,5 +14,11 @@ public class TransferAction implements Actions {
 		
 	}
 
+	@Override
+	public String[] getMessage() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 
 }
