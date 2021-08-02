@@ -2,6 +2,8 @@ package StateMachine;
 
 import BankActions.Actions;
 import BankActions.BankActions;
+import Singletons.Bank;
+import Singletons.TerminalPrinter;
 
 public class EndBank implements BankState {
 
@@ -14,13 +16,14 @@ public class EndBank implements BankState {
 	
 	@Override
 	public void BeginState() {
-		// TODO Auto-generated method stub
-
+		TerminalPrinter.PrintWelcome(); // Prints the welcome header.
+		Bank.setCurrentUserUsingBank(null); // sets the current user using the bank to be null.
+		bankActions.setStartBankState(); // Go to the Start bank state.
 	}
 
 	@Override
 	public void ActionTakenInState(Actions action) {
-		action.Action();
+		// TODO Auto-generated method stub
 	}
 
 }

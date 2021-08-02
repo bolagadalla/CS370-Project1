@@ -42,6 +42,7 @@ public class Bank {
 	{
 		if (!users.containsKey(userID)) {
 			users.put(userID, user);
+			saveBankState();
 			return true;
 		}
 		return false;

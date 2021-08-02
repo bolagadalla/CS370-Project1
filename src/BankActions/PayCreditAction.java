@@ -2,6 +2,12 @@ package BankActions;
 
 public class PayCreditAction implements Actions {
 
+	BankActions bankActions;
+	
+	public PayCreditAction(BankActions bankActions) {
+		this.bankActions = bankActions;
+	}
+	
 	@Override
 	public boolean Check() {
 		// TODO Auto-generated method stub
@@ -10,8 +16,11 @@ public class PayCreditAction implements Actions {
 
 	@Override
 	public void Action() {
-		// TODO Auto-generated method stub
-		
+		// Print Enter amount you would like to pay from your credit card
+		// Store that amount into a variable
+		// Subtract it from currentUserUsingBank account Credit balance
+		// Print amount paid successful
+		// Go to banking state
 	}
 
 	@Override

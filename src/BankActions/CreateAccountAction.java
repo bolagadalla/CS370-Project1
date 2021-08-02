@@ -7,6 +7,7 @@ import AccountsFactory.DebitCard;
 import Default.User;
 import Singletons.Bank;
 import Singletons.TerminalPrinter;
+import StateMachine.BankStart;
 import StateMachine.Banking;
 
 public class CreateAccountAction implements Actions {
@@ -20,9 +21,7 @@ public class CreateAccountAction implements Actions {
 	
 	@Override
 	public boolean Check() {
-		Bank.getInstance();
-		// TODO Auto-generated method stub
-		return !Bank.checkUserExist(newUser.getAccountNumber());
+		return Bank.AddNewUser(newUser.getAccountNumber(), newUser);
 	}
 
 	@Override
@@ -30,38 +29,47 @@ public class CreateAccountAction implements Actions {
 		// Takes user input and add it to the new user Object
 		AskForUserInfo();
 		// Checks if the user actually exists
-		if (!Check()) return;
-		// If it doesnt exit then it will continue to here
-		// We add the new user to the bank and make them the currentUserUsingBank
-		Bank.AddNewUser(newUser.getAccountNumber(), newUser);
-		TerminalPrinter.PrintLine("Your new balance is: $" + newUser.getAccountType().getBalance());
-		Bank.setCurrentUserUsingBank(newUser); // Sets the current user
-		bankActions.SetCurrentBankState(new Banking(bankActions)); // Goes to next state
+		if (Check()) {
+			TerminalPrinter.ClearConsole();
+			TerminalPrinter.PrintLine("Your new balance is: $" + newUser.getAccountType().getBalance());
+			Bank.setCurrentUserUsingBank(newUser); // Sets the current user
+			bankActions.setBankingState(); // Goes to next state
+		}
+		else
+		{
+			TerminalPrinter.ClearConsole();
+			TerminalPrinter.PrintLine("You already have an account with us.\nPlease log into that account.");
+			bankActions.setStartBankState();
+		}
+		
 	}
 	
 	public void AskForUserInfo()
 	{
 		Scanner scan = new Scanner(System.in);
+		TerminalPrinter.ClearConsole();
 		//--------------------------------OPENING AN ACCOUNT----------------------------------\\
 		TerminalPrinter.PrintOptions("Which account would you like to open?", "Checking Account", "Credit Account");
 		int accountType = scan.nextInt();
 		
 		switch (accountType) {
 		case 1: {
-			TerminalPrinter.PrintLine("What would be your initial deposit");
+			TerminalPrinter.PrintLine("Enter initial deposit: ", false);
 			double initialAmount = scan.nextDouble();
 			newUser.setAccountType(new DebitCard(initialAmount));
+			break;
 		}
 		case 2: {
-			TerminalPrinter.PrintLine("What is your current Credit Score?");
+			TerminalPrinter.PrintLine("Enter your current Credit Score: ", false);
 			int creditScore = scan.nextInt();
 			newUser.setAccountType(new CreditCard(CalculateCreditLimitAmount(creditScore)));
+			break;
 		}
 		
 		}
 		//--------------------------------ASKING PERSONAL INFO--------------------------------\\		
 		
-		TerminalPrinter.PrintLine("What is your full name?");
+		TerminalPrinter.PrintLine("Enter your full name: ", false);
 		String[] name = {"", ""};
 		name[0] = (String) scan.next().strip();
 		name[1] = scan.hasNext() ? (String) scan.next().strip() : "";
@@ -72,7 +80,7 @@ public class CreateAccountAction implements Actions {
 		TerminalPrinter.PrintLine("Your Username will now be: " + username);
 		newUser.setUsername(username);
 		
-		TerminalPrinter.PrintLine("Type a Password for your account: ");
+		TerminalPrinter.PrintLine("Type a Password for your account: ", false);
 		newUser.setPassword((String) scan.next().strip());
 	}
 	

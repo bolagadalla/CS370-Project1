@@ -14,9 +14,10 @@ public class Banking implements BankState {
 	{
 		this.bankActions = bankActions;
 		stateActions = new ArrayList<Actions>();
-		stateActions.add(new DepositAction());
-		stateActions.add(new WithdrawAction());
-		stateActions.add(new TransferAction());
+		stateActions.add(new DepositAction(bankActions));
+		stateActions.add(new WithdrawAction(bankActions));
+		stateActions.add(new TransferAction(bankActions));
+		stateActions.add(new QuitBanking(bankActions));
 	}
 	
 	@Override

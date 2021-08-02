@@ -1,17 +1,40 @@
 package BankActions;
 
-public class WithdrawAction implements Actions {
+import java.util.Scanner;
 
+import Singletons.Bank;
+import Singletons.TerminalPrinter;
+
+public class WithdrawAction implements Actions {
+	
+	private BankActions bankActions;
+	private int amountRequested = 0;
+	
+	public WithdrawAction(BankActions bankActions) {
+		this.bankActions = bankActions;
+	}
+	
 	@Override
 	public boolean Check() {
-		// TODO Auto-generated method stub
-		return false;
+		return Bank.getCurrentUserUsingBank().getAccountType().getBalance() - amountRequested < 0;
 	}
 
 	@Override
 	public void Action() {
-		// TODO Auto-generated method stub
-		
+		Scanner scan = new Scanner(System.in);
+		TerminalPrinter.PrintLine("Your current balance is <$" + Bank.getCurrentUserUsingBank().getAccountType().getBalance() + ">");
+		TerminalPrinter.PrintLine("Enter amount to withdraw: ", false);
+		amountRequested = scan.nextInt();
+		if (Check()) {
+			TerminalPrinter.PrintLine("Sorry you don\'t have enough cash to make this withdraw.");
+			TerminalPrinter.PrintLine("Your current balance is <$" + Bank.getCurrentUserUsingBank().getAccountType().getBalance() + ">");
+			bankActions.setBankingState();
+			return;
+		}
+		TerminalPrinter.PrintLine("Thank you for your withdraw of <$" + amountRequested + ">");
+		Bank.getCurrentUserUsingBank().getAccountType().useBalance(amountRequested);
+		TerminalPrinter.PrintLine("Your new balance is <$" + Bank.getCurrentUserUsingBank().getAccountType().getBalance() + ">");
+		bankActions.setBankingState();
 	}
 
 	@Override

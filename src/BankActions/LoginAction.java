@@ -28,10 +28,10 @@ public class LoginAction implements Actions{
 	public boolean Check() {
 		Scanner scan = new Scanner(System.in);
 		// TODO Auto-generated method stub
-		TerminalPrinter.PrintLine("Please Enter Username: ");
+		TerminalPrinter.PrintLine("Please Enter Username: ", false);
 		// Read Input and assign it to currentUserUsername
 		currentUserUsername = (String) scan.next().strip();
-		TerminalPrinter.PrintLine("Please Enter Password: ");
+		TerminalPrinter.PrintLine("Please Enter Password: ", false);
 		// Read input and assign it to currentUserPassword
 		currentUserPassword = (String) scan.next().strip();
 		System.out.println("Currently is always true");
@@ -48,12 +48,13 @@ public class LoginAction implements Actions{
 	public void Action() {
 		if (Check()) {
 			TerminalPrinter.PrintLine("Login Success!");
-			bankActions.SetCurrentBankState(new Banking(bankActions));
+			bankActions.setBankingState();
 		}
 		else
 		{
+			TerminalPrinter.ClearConsole();
 			TerminalPrinter.PrintLine("Credentials are incorrect");
-			bankActions.SetCurrentBankState(new BankStart(bankActions));
+			bankActions.setStartBankState();
 		}
 	}
 

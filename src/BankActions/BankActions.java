@@ -2,26 +2,19 @@ package BankActions;
 
 import java.util.ArrayList;
 
-import Default.User;
-import Observers.Logger;
 import Observers.MyObservable;
 import Observers.MyObserver;
-import Singletons.Bank;
 import Singletons.TerminalPrinter;
 import StateMachine.BankStart;
 import StateMachine.BankState;
 import StateMachine.Banking;
-import StateMachine.CreateAccountBank;
 import StateMachine.EndBank;
-import StateMachine.LoginBank;
 
 public class BankActions implements MyObservable {
 	private ArrayList<MyObserver> observers;
 	private ArrayList<Actions> actionsToTake;
 	
 	private BankState startBankState;
-	private BankState loginBankState;
-	private BankState createBankAccState;
 	private BankState bankingState;
 	private BankState endBankState;
 	
@@ -33,8 +26,6 @@ public class BankActions implements MyObservable {
 		actionsToTake = new ArrayList<Actions>();
 		
 		startBankState = new BankStart(this);
-		loginBankState = new LoginBank(this);
-		createBankAccState = new CreateAccountBank(this);
 		bankingState = new Banking(this);
 		endBankState = new EndBank(this);
 		
@@ -86,7 +77,12 @@ public class BankActions implements MyObservable {
 	{
 		actionsToTake = actions;
 	}
-
+	
+	public void setStartBankState() {SetCurrentBankState(startBankState);}
+	public void setBankingState() {SetCurrentBankState(bankingState);}
+	public void setEndBankState() {SetCurrentBankState(endBankState);}
+	
+	
 	//-----------------------------OBSERVERS FUNCTIONS-----------------------------------\\
 	
 	@Override
