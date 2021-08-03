@@ -1,9 +1,9 @@
 package Default;
 
-import AccountsFactory.AccountType;
+import AccountsFactory.Account;
 
 public class User {
-	private AccountType accountType;
+	private Account accountType;
 	private String accountNumber;
 	private String[] name;
 	private String username;
@@ -15,10 +15,10 @@ public class User {
 		accountNumber = generateAccountNumber();
 	}
 	
-	public AccountType getAccountType() {
+	public Account getAccountType() {
 		return accountType;
 	}
-	public void setAccountType(AccountType accountType) {
+	public void setAccountType(Account accountType) {
 		this.accountType = accountType;
 	}
 

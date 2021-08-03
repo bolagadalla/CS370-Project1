@@ -1,5 +1,8 @@
 package BankActions;
 
+import Singletons.Bank;
+import Singletons.TerminalPrinter;
+
 public class QuitBanking implements Actions {
 
 	BankActions bankActions;
@@ -8,15 +11,25 @@ public class QuitBanking implements Actions {
 		this.bankActions = bankActions;
 	}
 	
+	/**
+	 * Checks to see if the current bank state is the start state.
+	 * */
 	@Override
 	public boolean Check() {
-		// TODO Auto-generated method stub
-		return false;
+		return bankActions.GetCurrentBankState() == bankActions.getStartBankState();
 	}
 
+	/**
+	 * If the state is the start state then we exit the program. if its not then we go to the start state.
+	 * */
 	@Override
 	public void Action() {
-		// Go to the EndBank state. using the bankActions
+		TerminalPrinter.ClearConsole();
+		if (Check()) {
+			Bank.saveBankState();
+			System.exit(0);
+		}
+		bankActions.setStartBankState();
 	}
 
 	@Override

@@ -82,6 +82,8 @@ public class BankActions implements MyObservable {
 	public void setBankingState() {SetCurrentBankState(bankingState);}
 	public void setEndBankState() {SetCurrentBankState(endBankState);}
 	
+	public BankState getStartBankState() {return startBankState;}
+	
 	
 	//-----------------------------OBSERVERS FUNCTIONS-----------------------------------\\
 	

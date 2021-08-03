@@ -2,13 +2,10 @@ package BankActions;
 
 import java.util.Scanner;
 
-import AccountsFactory.CreditCard;
-import AccountsFactory.DebitCard;
+import AccountsFactory.AccountFactory;
 import Default.User;
 import Singletons.Bank;
 import Singletons.TerminalPrinter;
-import StateMachine.BankStart;
-import StateMachine.Banking;
 
 public class CreateAccountAction implements Actions {
 	
@@ -28,6 +25,7 @@ public class CreateAccountAction implements Actions {
 	public void Action() {
 		// Takes user input and add it to the new user Object
 		AskForUserInfo();
+		if (newUser.getAccountType() == null) return;
 		// Checks if the user actually exists
 		if (Check()) {
 			TerminalPrinter.ClearConsole();
@@ -46,26 +44,34 @@ public class CreateAccountAction implements Actions {
 	
 	public void AskForUserInfo()
 	{
+		// Account Factory to create the Account object during runtime
+		AccountFactory accountFactory = new AccountFactory();
+		
 		Scanner scan = new Scanner(System.in);
 		TerminalPrinter.ClearConsole();
+		
 		//--------------------------------OPENING AN ACCOUNT----------------------------------\\
-		TerminalPrinter.PrintOptions("Which account would you like to open?", "Checking Account", "Credit Account");
+		TerminalPrinter.PrintOptions("Which account would you like to open?", "Debit Account", "Credit Account");
 		int accountType = scan.nextInt();
 		
 		switch (accountType) {
 		case 1: {
 			TerminalPrinter.PrintLine("Enter initial deposit: ", false);
-			double initialAmount = scan.nextDouble();
-			newUser.setAccountType(new DebitCard(initialAmount));
+			int initialAmount = scan.nextInt();
+			newUser.setAccountType(accountFactory.createAccount(accountType, initialAmount));
 			break;
 		}
 		case 2: {
 			TerminalPrinter.PrintLine("Enter your current Credit Score: ", false);
 			int creditScore = scan.nextInt();
-			newUser.setAccountType(new CreditCard(CalculateCreditLimitAmount(creditScore)));
+			newUser.setAccountType(accountFactory.createAccount(accountType, CalculateCreditLimitAmount(creditScore)));
 			break;
 		}
-		
+        default: {
+            System.err.println("Invalid option selected, You should enter 1) Credit Card or 2) Debit Card");
+        	bankActions.setStartBankState();
+            return;
+        }
 		}
 		//--------------------------------ASKING PERSONAL INFO--------------------------------\\		
 		
@@ -84,7 +90,7 @@ public class CreateAccountAction implements Actions {
 		newUser.setPassword((String) scan.next().strip());
 	}
 	
-	public double CalculateCreditLimitAmount(int creditScore)
+	public int CalculateCreditLimitAmount(int creditScore)
 	{
 		// equation: (creditScore * 3) - maximumSubtractionFromCreditLimit %
 		int maximumSubtractionFromCreditLimit = 65; // 65%

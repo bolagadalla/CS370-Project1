@@ -6,6 +6,7 @@ import BankActions.Actions;
 import BankActions.BankActions;
 import BankActions.CreateAccountAction;
 import BankActions.LoginAction;
+import BankActions.QuitBanking;
 import Singletons.TerminalPrinter;
 
 public class BankStart implements BankState {
@@ -19,6 +20,7 @@ public class BankStart implements BankState {
 		stateActions = new ArrayList<Actions>();
 		stateActions.add(new LoginAction(bankActions));
 		stateActions.add(new CreateAccountAction(bankActions));
+		stateActions.add(new QuitBanking(bankActions));
 	}
 	
 	/**
@@ -29,7 +31,7 @@ public class BankStart implements BankState {
 	@Override
 	public void BeginState() {
 		System.out.println();
-		TerminalPrinter.PrintOptions("What would you like to do?", "Login To Bank", "Create Bank Account");
+		TerminalPrinter.PrintOptions("What would you like to do?", "Login To Bank", "Create Bank Account", "Quit Bank");
 		bankActions.CreateNewActions(stateActions);
 	}
 
