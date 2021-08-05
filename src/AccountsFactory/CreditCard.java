@@ -82,4 +82,9 @@ public class CreditCard implements Account {
     public void setCreditLimit(double AdjustCredit) {
         this.creditLimit = AdjustCredit;
     }
+    
+    @Override
+    public String toString() {
+    	return "Credit Card" + "\nAccount Number:\t" + accountNumber + "\nCredit Limit:\t" + creditLimit;
+    }
 }

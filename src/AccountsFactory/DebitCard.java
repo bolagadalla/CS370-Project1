@@ -80,4 +80,9 @@ public class DebitCard implements Account {
     public void setCreditLimit(double creditLimit) {
         System.err.println("Can't reach to the CreditLimit");
     }
+    
+    @Override
+    public String toString() {
+    	return "Debit Card" + "\nAccount Number:\t" + accountNumber + "\nBalance:\t" + balance;
+    }
 }

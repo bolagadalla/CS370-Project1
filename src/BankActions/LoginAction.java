@@ -5,14 +5,12 @@ import java.util.Scanner;
 import Default.User;
 import Singletons.Bank;
 import Singletons.TerminalPrinter;
-import StateMachine.BankStart;
-import StateMachine.Banking;
 
 public class LoginAction implements Actions{
 	
 	BankActions bankActions;
 	
-	private String currentUserUsername;
+	private String currentUserAccountNumber;
 	private String currentUserPassword;
 	
 	public LoginAction(BankActions bankActions)
@@ -28,16 +26,15 @@ public class LoginAction implements Actions{
 	public boolean Check() {
 		Scanner scan = new Scanner(System.in);
 		// TODO Auto-generated method stub
-		TerminalPrinter.PrintLine("Please Enter Username: ", false);
+		TerminalPrinter.PrintLine("Please Enter Your Account Number: ", false);
 		// Read Input and assign it to currentUserUsername
-		currentUserUsername = (String) scan.next().strip();
+		currentUserAccountNumber = (String) scan.nextLine();
 		TerminalPrinter.PrintLine("Please Enter Password: ", false);
 		// Read input and assign it to currentUserPassword
-		currentUserPassword = (String) scan.next().strip();
-		System.out.println("Currently is always true");
-		User user = Bank.getUser(currentUserUsername);
-		// return user.getUsername() == currentUserUsername && user.getPassword() == currentUserPassword;
-		return currentUserUsername == "Bola" && currentUserPassword == "123456";
+		currentUserPassword = (String) scan.nextLine();
+		User user = Bank.getUser(currentUserAccountNumber); // Will return null if the user doesnt exist, so we only need to check if the user exists or not
+		System.out.println(user.getPassword());
+		return user != null && user.getPassword() == currentUserPassword;
 	}
 	
 	/**
@@ -60,12 +57,13 @@ public class LoginAction implements Actions{
 
 	@Override
 	public String[] getMessage() {
-		// TODO Auto-generated method stub
+		User user = Bank.getCurrentUserUsingBank();
+		String[] log = {""}; // {user.getUsername(), " -- Login "};
 		return null;
 	}
 
 	public void setCurrentUserUsername(String currentUserUsername) {
-		this.currentUserUsername = currentUserUsername;
+		this.currentUserAccountNumber = currentUserUsername;
 	}
 
 	public void setCurrentUserPassword(String currentUserPassword) {

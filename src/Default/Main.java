@@ -3,7 +3,6 @@ package Default;
 import java.util.Scanner;
 
 import BankActions.BankActions;
-import Singletons.Bank;
 import Singletons.TerminalPrinter;
 
 public class Main {
@@ -12,10 +11,11 @@ public class Main {
 		TerminalPrinter.PrintWelcome();
 		BankActions bankActions = new BankActions();
 		Scanner scan = new Scanner(System.in);
-		while (true) {
-			bankActions.TakeAction(scan.nextInt() - 1);
+		while (bankActions.ActionsCount() != 0) {
 			scan = new Scanner(System.in);
+			bankActions.TakeAction(scan.nextInt() - 1);
 		}
+		scan.close();
 	}
 
-}
+}// 7182832900

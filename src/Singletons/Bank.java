@@ -40,11 +40,20 @@ public class Bank {
 	
 	public static boolean AddNewUser(String userID, User user)
 	{
+		// Loops through the users to see if there are any user with the same SSN and account type that they are creating
+		for (User s : users.values()) {
+			if (s.getSSN() == user.getSSN() && s.getAccountType() == user.getAccountType()) {
+				return false;
+			}
+		}
+		
+		// Makes sure the account number is not in use
 		if (!users.containsKey(userID)) {
 			users.put(userID, user);
 			saveBankState();
 			return true;
 		}
+		
 		return false;
 	}
 

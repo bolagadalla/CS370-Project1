@@ -66,7 +66,8 @@ public class BankActions implements MyObservable {
 		if (actionIndex < 0 || actionIndex > actionsToTake.size() - 1) {
 			// Will print this statement and exists out of this function
 			// Since its called in a while loop, it will come back to this with a new input, so we dont need to take new input here.
-			TerminalPrinter.PrintLine("Incorrect Input, please try again: ");
+			TerminalPrinter.PrintLine("Incorrect Input, please try again.");
+			setStartBankState();
 			return;
 		}
 		notifyListeners(actionsToTake.get(actionIndex).getMessage());
@@ -77,7 +78,7 @@ public class BankActions implements MyObservable {
 	{
 		actionsToTake = actions;
 	}
-	
+	public int ActionsCount() { return actionsToTake.size(); }
 	public void setStartBankState() {SetCurrentBankState(startBankState);}
 	public void setBankingState() {SetCurrentBankState(bankingState);}
 	public void setEndBankState() {SetCurrentBankState(endBankState);}
@@ -87,34 +88,48 @@ public class BankActions implements MyObservable {
 	
 	//-----------------------------OBSERVERS FUNCTIONS-----------------------------------\\
 	
-	@Override
-	public void notifyListeners(String[] actions) {
-		for (MyObserver myObserver : observers) {
-			myObserver.update(actions[0], actions[1]);
+		@Override
+		/*
+		 * This method will be used to notify a system event or user action to registered listeners ex) logger class
+		 * @param action - action[0] : action detail  action[1] : user name
+		 */
+		public void notifyListeners(String[] action) {
+			for (MyObserver myObserver : observers) {
+				myObserver.update(action[0], action[1]);
+			}
+		}
+
+		@Override
+		/*
+		 * Register observer object to gather or know user's action and system event
+		 * @param observer - the object that wants to be notified
+		 */
+		public void addListener(MyObserver observer) {
+			observers.add(observer);
+		}
+
+		@Override
+		/*
+		 * Unregister observer to stop to be notified actions and events
+		 * @param observer - the object that wants to be notified
+		 */
+		public void removeListener(MyObserver observer) {
+			observers.remove(observer);
+		}
+		
+		//-----------------------------PRIVATE FUNCTIONS-------------------------------------\\
+		
+		/**
+		 * Will call the ActionTakenInState method on the currentBankState interface.
+		 * So we only need to call this method to take action on the current bank state.
+		 * @param action - The action that will be taken on this state. This action is coming from the classes that implement the Actions Interface.
+		 * */
+		private void ActionTakenInState(Actions action)
+		{
+			currentBankState.ActionTakenInState(action);
+			
+			notifyListeners(action.getMessage());
+			//When an action or event are taken place, registered listeners will be notified by calling notifyListeners() method.
+			//Each action class has getMessage() method to return specific message as String array for each of the actions 
 		}
 	}
-
-	@Override
-	public void addListener(MyObserver observer) {
-		observers.add(observer);
-	}
-
-	@Override
-	public void removeListener(MyObserver observer) {
-		observers.remove(observer);
-	}
-	
-	//-----------------------------PRIVATE FUNCTIONS-------------------------------------\\
-	
-	/**
-	 * Will call the ActionTakenInState method on the currentBankState interface.
-	 * So we only need to call this method to take action on the current bank state.
-	 * @param action - The action that will be taken on this state. This action is coming from the classes that implement the Actions Interface.
-	 * */
-	private void ActionTakenInState(Actions action)
-	{
-		currentBankState.ActionTakenInState(action);
-	}
-}
-
-

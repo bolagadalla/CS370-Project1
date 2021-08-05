@@ -18,7 +18,7 @@ public class CreateAccountAction implements Actions {
 	
 	@Override
 	public boolean Check() {
-		return Bank.AddNewUser(newUser.getAccountNumber(), newUser);
+		return Bank.AddNewUser(newUser.getAccountType().getAccountNumber(), newUser);
 	}
 
 	@Override
@@ -29,14 +29,15 @@ public class CreateAccountAction implements Actions {
 		// Checks if the user actually exists
 		if (Check()) {
 			TerminalPrinter.ClearConsole();
-			TerminalPrinter.PrintLine("Your new balance is: $" + newUser.getAccountType().getBalance());
+			TerminalPrinter.PrintLine("Account Successfuly Created\nYour Account Number is: " + newUser.getAccountType().getAccountNumber());
+			TerminalPrinter.PrintLine("Your new balance is: $<" + newUser.getAccountType().getBalance() + ">");
 			Bank.setCurrentUserUsingBank(newUser); // Sets the current user
 			bankActions.setBankingState(); // Goes to next state
 		}
 		else
 		{
 			TerminalPrinter.ClearConsole();
-			TerminalPrinter.PrintLine("You already have an account with us.\nPlease log into that account.");
+			TerminalPrinter.PrintLine("You already have an account with that SSN.\nPlease log into that account.");
 			bankActions.setStartBankState();
 		}
 		
@@ -81,6 +82,9 @@ public class CreateAccountAction implements Actions {
 		name[1] = scan.hasNext() ? (String) scan.next().strip() : "";
 		newUser.setName(name);
 		
+		TerminalPrinter.PrintLine("Enter your SSN: ", false);
+		String ssn = (String) scan.next().strip();
+		newUser.setSSN(ssn);
 		
 		String username = name[0].toLowerCase() + name[1].toLowerCase() + Integer.toString((int)(Math.random()*(99-0+1)+0));
 		TerminalPrinter.PrintLine("Your Username will now be: " + username);
@@ -110,7 +114,8 @@ public class CreateAccountAction implements Actions {
 
 	@Override
 	public String[] getMessage() {
-		// TODO Auto-generated method stub
-		return null;
+		User user = Bank.getCurrentUserUsingBank();
+		String[] log = {""}; // {user.getUsername(), " -- The new account : " + user.getAccountType().getAccountNumber() + " is created"};
+		return log;
 	}
 }

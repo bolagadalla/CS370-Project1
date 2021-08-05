@@ -2,6 +2,7 @@ package BankActions;
 
 import java.util.Scanner;
 
+import Default.User;
 import Singletons.Bank;
 import Singletons.TerminalPrinter;
 
@@ -39,7 +40,8 @@ public class WithdrawAction implements Actions {
 
 	@Override
 	public String[] getMessage() {
-		// TODO Auto-generated method stub
+		User user = Bank.getCurrentUserUsingBank();
+		String[] log = {""};//  {user.getUsername(), "Withdraw -- The balance of "+ user.getAccountType().getAccountNumber() +" has been changed to " + user.getAccountType().getBalance()};
 		return null;
 	}
 
