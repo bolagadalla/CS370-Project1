@@ -1,5 +1,8 @@
 package BankActions;
 
+import Default.User;
+import Singletons.Bank;
+
 public class PayCreditAction implements Actions {
 
 	BankActions bankActions;
@@ -25,9 +28,11 @@ public class PayCreditAction implements Actions {
 
 	@Override
 	public String[] getMessage() {
-		// TODO Auto-generated method stub
-		return null;
+		User user = Bank.getCurrentUserUsingBank();
+		String[] log = {user.getUsername(), "  Pay credit"};
+		return log;
 	}
+
 
 
 }

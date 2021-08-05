@@ -70,7 +70,6 @@ public class BankActions implements MyObservable {
 			setStartBankState();
 			return;
 		}
-		notifyListeners(actionsToTake.get(actionIndex).getMessage());
 		ActionTakenInState(actionsToTake.get(actionIndex));
 	}
 	
