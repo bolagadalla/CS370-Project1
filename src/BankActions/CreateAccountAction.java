@@ -4,6 +4,7 @@ import java.util.Scanner;
 
 import AccountsFactory.AccountFactory;
 import Default.User;
+import Proxy.Pin;
 import Singletons.Bank;
 import Singletons.TerminalPrinter;
 
@@ -90,8 +91,8 @@ public class CreateAccountAction implements Actions {
 		TerminalPrinter.PrintLine("Your Username will now be: " + username);
 		newUser.setUsername(username);
 		
-		TerminalPrinter.PrintLine("Type a Password for your account: ", false);
-		newUser.setPassword((String) scan.next().strip());
+		TerminalPrinter.PrintLine("Type a Pin for your account: ", false);
+		newUser.setPin(new Pin(scan.nextInt()));
 	}
 	
 	public int CalculateCreditLimitAmount(int creditScore)

@@ -9,9 +9,9 @@ import Singletons.TerminalPrinter;
 public class LoginAction implements Actions{
 	
 	BankActions bankActions;
-	
+	private User user;
 	private String currentUserAccountNumber;
-	private String currentUserPassword;
+	private int currentUserPin;
 	
 	public LoginAction(BankActions bankActions)
 	{
@@ -31,10 +31,9 @@ public class LoginAction implements Actions{
 		currentUserAccountNumber = (String) scan.nextLine();
 		TerminalPrinter.PrintLine("Please Enter Password: ", false);
 		// Read input and assign it to currentUserPassword
-		currentUserPassword = (String) scan.nextLine();
-		User user = Bank.getUser(currentUserAccountNumber); // Will return null if the user doesnt exist, so we only need to check if the user exists or not
-		System.out.println(user.getPassword());
-		return user != null && user.getPassword() == currentUserPassword;
+		currentUserPin = scan.nextInt();
+		user = Bank.getUser(currentUserAccountNumber); // Will return null if the user doesnt exist, so we only need to check if the user exists or not
+		return user != null && user.getPin().checkPin(currentUserPin);
 	}
 	
 	/**
@@ -45,12 +44,14 @@ public class LoginAction implements Actions{
 	public void Action() {
 		if (Check()) {
 			TerminalPrinter.PrintLine("Login Success!");
+			Bank.setCurrentUserUsingBank(user);
 			bankActions.setBankingState();
 		}
 		else
 		{
 			TerminalPrinter.ClearConsole();
 			TerminalPrinter.PrintLine("Credentials are incorrect");
+			user = null;
 			bankActions.setStartBankState();
 		}
 	}
@@ -61,14 +62,4 @@ public class LoginAction implements Actions{
 		String[] log = {""}; // {user.getUsername(), " -- Login "};
 		return null;
 	}
-
-	public void setCurrentUserUsername(String currentUserUsername) {
-		this.currentUserAccountNumber = currentUserUsername;
-	}
-
-	public void setCurrentUserPassword(String currentUserPassword) {
-		this.currentUserPassword = currentUserPassword;
-	}
-
-
 }

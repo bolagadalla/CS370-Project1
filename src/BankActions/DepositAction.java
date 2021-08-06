@@ -3,13 +3,15 @@ package BankActions;
 import java.util.Scanner;
 
 import Default.User;
+import Proxy.AtmProxy;
 import Singletons.Bank;
 import Singletons.TerminalPrinter;
 
 public class DepositAction implements Actions {
 
 	BankActions bankActions;
-	
+	Proxy.Bank atmProxy;
+
 	public DepositAction(BankActions bankActions) {
 		this.bankActions = bankActions;
 	}
@@ -22,13 +24,15 @@ public class DepositAction implements Actions {
 
 	@Override
 	public void Action() {
+		atmProxy = new AtmProxy(Bank.getCurrentUserUsingBank().getPin(), bankActions.getBankBranch());
+		
 		Scanner scan = new Scanner(System.in);
 		TerminalPrinter.ClearConsole();
 		TerminalPrinter.PrintLine("Enter the amount you wish to deposit: ", false);
 		int amountEntered = scan.nextInt();
-		Bank.getCurrentUserUsingBank().getAccountType().addBalance(amountEntered);
-		TerminalPrinter.PrintLine("Thank you for your deposit of $" + amountEntered);
-		TerminalPrinter.PrintLine("Your new balance is <$" + Bank.getCurrentUserUsingBank().getAccountType().getBalance() + ">");
+		atmProxy.atmDeposit(amountEntered);
+		TerminalPrinter.PrintLine("Thank you for your deposit of <$" + amountEntered + ">");
+		TerminalPrinter.PrintLine("Your new balance is <$" + atmProxy.getBalance() + ">");
 		bankActions.setBankingState();
 	}
 

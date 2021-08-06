@@ -1,6 +1,7 @@
 package Default;
 
 import AccountsFactory.Account;
+import Proxy.Pin;
 
 public class User {
 	private Account accountType;
@@ -8,7 +9,7 @@ public class User {
 	private String username;
 	private String creditScore;
 	private String ssn;
-	private String password;
+	private Pin pin;
 	
 
 	public Account getAccountType() {
@@ -31,13 +32,6 @@ public class User {
 	public void setCreditScore(String ssn) {
 		this.creditScore = ssn;
 	}
-	
-	public String getPassword() {
-		return password;
-	}
-	public void setPassword(String password) {
-		this.password = password;
-	}
 
 	public String getUsername() {
 		return username;
@@ -55,8 +49,15 @@ public class User {
 		this.ssn = ssn;
 	}
 	
+	public Pin getPin() {
+		return pin;
+	}
+	public void setPin(Pin pin) {
+		this.pin = pin;
+	}
+	
 	@Override
 	public String toString() {
-		return "Account Type:\t" + accountType.toString() + "\nUsername:\t" + username + "\nPassword:\t" + password;
+		return "Account Type:\t" + accountType.toString() + "\nUsername:\t" + username + "\nPin:\t" + pin.getPinNum();
 	}
 }

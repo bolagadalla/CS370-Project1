@@ -3,12 +3,15 @@ package BankActions;
 import java.util.Scanner;
 
 import Default.User;
+import Proxy.AtmProxy;
 import Singletons.Bank;
 import Singletons.TerminalPrinter;
 
 public class WithdrawAction implements Actions {
 	
 	private BankActions bankActions;
+	private Proxy.Bank atmProxy;
+	
 	private int amountRequested = 0;
 	
 	public WithdrawAction(BankActions bankActions) {
@@ -17,24 +20,26 @@ public class WithdrawAction implements Actions {
 	
 	@Override
 	public boolean Check() {
-		return Bank.getCurrentUserUsingBank().getAccountType().getBalance() - amountRequested < 0;
+		return atmProxy.getBalance() - amountRequested < 0;
 	}
 
 	@Override
 	public void Action() {
+		atmProxy = new AtmProxy(Bank.getCurrentUserUsingBank().getPin(), bankActions.getBankBranch());
+		
 		Scanner scan = new Scanner(System.in);
-		TerminalPrinter.PrintLine("Your current balance is <$" + Bank.getCurrentUserUsingBank().getAccountType().getBalance() + ">");
+		TerminalPrinter.PrintLine("Your current balance is <$" + atmProxy.getBalance() + ">");
 		TerminalPrinter.PrintLine("Enter amount to withdraw: ", false);
 		amountRequested = scan.nextInt();
 		if (Check()) {
 			TerminalPrinter.PrintLine("Sorry you don\'t have enough cash to make this withdraw.");
-			TerminalPrinter.PrintLine("Your current balance is <$" + Bank.getCurrentUserUsingBank().getAccountType().getBalance() + ">");
+			TerminalPrinter.PrintLine("Your current balance is <$" + atmProxy.getBalance() + ">");
 			bankActions.setBankingState();
 			return;
 		}
 		TerminalPrinter.PrintLine("Thank you for your withdraw of <$" + amountRequested + ">");
-		Bank.getCurrentUserUsingBank().getAccountType().useBalance(amountRequested);
-		TerminalPrinter.PrintLine("Your new balance is <$" + Bank.getCurrentUserUsingBank().getAccountType().getBalance() + ">");
+		bankActions.getBankBranch().setBalance(atmProxy.getBalance() - amountRequested);
+		TerminalPrinter.PrintLine("Your new balance is <$" + atmProxy.getBalance() + ">");
 		bankActions.setBankingState();
 	}
 

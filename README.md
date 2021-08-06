@@ -13,10 +13,17 @@ This is a group project for our CSCI 370 at Queens College with professor Aryeh 
 	- `User` class takes in `Account` as a variable
 	- The `AccountFactory` determines which account to assign to the User's Account.
 
-- @bolagadalla
+- @bolagadalla Implemented the State design pattern
 	- Implemented State Design to manage the different state the bank will be in.
 	- Implemented all the actions in the BankActions except these:
   		- TransferAction
   		- PayCreditAction
 	- Implemented the BankStart state, Banking State, EndBank State functionalities
 	- Added Some Code in the TerminalPrinter
+
+- @ Implemented the Proxy Pattern
+	- Implemented a Bank interface with actions that the proxy can use.
+	- Created the BankBranch which implements the Bank interface. 
+	The methods in the interface can be used fully in the BankBranch.
+	- Created the AtmProxy which implements the Bank interface.
+	This AtmProxy relies on the BankBranch.

@@ -4,6 +4,8 @@ import java.util.ArrayList;
 
 import Observers.MyObservable;
 import Observers.MyObserver;
+import Proxy.BankBranch;
+import Singletons.Bank;
 import Singletons.TerminalPrinter;
 import StateMachine.BankStart;
 import StateMachine.BankState;
@@ -13,6 +15,8 @@ import StateMachine.EndBank;
 public class BankActions implements MyObservable {
 	private ArrayList<MyObserver> observers;
 	private ArrayList<Actions> actionsToTake;
+	
+	private Proxy.Bank bankBranch;
 	
 	private BankState startBankState;
 	private BankState bankingState;
@@ -24,13 +28,10 @@ public class BankActions implements MyObservable {
 	{
 		observers = new ArrayList<MyObserver>();
 		actionsToTake = new ArrayList<Actions>();
-		
 		startBankState = new BankStart(this);
+		setStartBankState();
 		bankingState = new Banking(this);
 		endBankState = new EndBank(this);
-		
-		currentBankState = startBankState;
-		currentBankState.BeginState();
 	}
 	
 	/**
@@ -79,12 +80,32 @@ public class BankActions implements MyObservable {
 		actionsToTake = actions;
 	}
 	public int ActionsCount() { return actionsToTake.size(); }
-	public void setStartBankState() {SetCurrentBankState(startBankState);}
-	public void setBankingState() {SetCurrentBankState(bankingState);}
-	public void setEndBankState() {SetCurrentBankState(endBankState);}
+	public void setStartBankState() {
+		SetCurrentBankState(startBankState);
+		setBankBranch(null);
+		Bank.setCurrentUserUsingBank(null);
+	}
+	
+	public void setBankingState() {
+		SetCurrentBankState(bankingState);
+		if (bankBranch == null) {
+			setBankBranch(new BankBranch(Bank.getCurrentUserUsingBank()));	
+		}	
+	}
+	
+	public void setEndBankState() {
+		SetCurrentBankState(endBankState);
+	}
 	
 	public BankState getStartBankState() {return startBankState;}
 	
+	public BankBranch getBankBranch() {
+		return (BankBranch) bankBranch;
+	}
+
+	public void setBankBranch(Proxy.Bank bankBranch) {
+		this.bankBranch = bankBranch;
+	}
 	
 	//-----------------------------OBSERVERS FUNCTIONS-----------------------------------\\
 	
