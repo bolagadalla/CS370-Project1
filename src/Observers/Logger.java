@@ -24,7 +24,7 @@ public class Logger implements MyObserver{
 	 */
 	public void update(String action, String user) {
 		
-		TerminalPrinter.PrintLine("Logger notification: " + action);
+		TerminalPrinter.PrintLine("\nLogger notification: " + action + user+"\n");
 		//if the key is inserted at first, create new stack
 		
 		if(!transactionLog.containsKey(user)) {
