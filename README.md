@@ -21,9 +21,14 @@ This is a group project for our CSCI 370 at Queens College with professor Aryeh 
 	- Implemented the BankStart state, Banking State, EndBank State functionalities
 	- Added Some Code in the TerminalPrinter
 
-- @ Implemented the Proxy Pattern
-	- Implemented a Bank interface with actions that the proxy can use.
-	- Created the BankBranch which implements the Bank interface. 
-	The methods in the interface can be used fully in the BankBranch.
-	- Created the AtmProxy which implements the Bank interface.
+- @Kurissu Implemented the Proxy Pattern
+	- Implemented a `Bank` interface with actions that the proxy can use.
+	- Created the `BankBranch` which implements the `Bank` interface. 
+	The methods in the interface can be used fully in the `BankBranch`.
+	- Created the `AtmProxy` which implements the `Bank` interface.
 	This AtmProxy relies on the BankBranch.
+	
+- @iamash96 Implemented the Visitor pattern
+	- Created `AccountElement` interface which acts as the `accept` method of the Visitor pattern
+	- Created the `AccountVisitor` interface which acts as the different overloaded method `visitor` of the Visitor pattern
+	- Created the `AccountVisitorImpl` class which implements the `AccountVisitor` interface

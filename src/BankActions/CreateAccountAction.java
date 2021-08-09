@@ -36,11 +36,11 @@ public class CreateAccountAction implements Actions {
 			TerminalPrinter.PrintLine("Your new balance is: $<" + newUser.getAccountType().getBalance() + ">");
 			Bank.setCurrentUserUsingBank(newUser); // Sets the current user
 			if (newUser.getAccountType().isCanTransfer()) {
-				bankActions.setDebitBankingState(); // Goes to next state
+				bankActions.getDebitBankingState().accept(bankActions.getAccountVisitor());
 			}
 			else
 			{
-				bankActions.setCreditBankingState(); // Goes to next state
+				bankActions.getCreditBankingState().accept(bankActions.getAccountVisitor());
 			}
 		}
 		else

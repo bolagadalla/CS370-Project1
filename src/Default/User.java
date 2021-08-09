@@ -12,16 +12,6 @@ public class User {
 	private Pin pin;
 	
 	public User() {}
-	
-	public User(Account accountType, String[] name, String username, String creditScore, String ssn, Pin pin)
-	{
-		this.accountType = accountType;
-		this.name = name;
-		this.username = username;
-		this.creditScore = creditScore;
-		this.ssn = ssn;
-		this.pin = pin;
-	}
 
 	public Account getAccountType() {
 		return accountType;

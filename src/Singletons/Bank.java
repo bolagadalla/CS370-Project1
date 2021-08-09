@@ -37,17 +37,23 @@ public class Bank {
 		return users.containsKey(userID);
 	}
 	
-	public static boolean AddNewUser(String userID, User user)
+	private static boolean checkSSNUserExist(User user)
 	{
+		boolean flag = true;
 		// Loops through the users to see if there are any user with the same SSN and account type that they are creating
 		for (User s : users.values()) {
 			if (s.getSSN() == user.getSSN() && s.getAccountType().isCanTransfer() == user.getAccountType().isCanTransfer()) {
-				return false;
+				flag = false;
+				break;
 			}
 		}
-		
+		return flag;
+	}
+	
+	public static boolean AddNewUser(String userID, User user)
+	{
 		// Makes sure the account number is not in use
-		if (!checkUserExist(userID)) {
+		if (!checkUserExist(userID) && checkSSNUserExist(user)) {
 			users.put(userID, user);
 			saveBankState();
 			return true;

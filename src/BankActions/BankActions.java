@@ -12,6 +12,7 @@ import StateMachine.BankState;
 import StateMachine.CreditBanking;
 import StateMachine.DebitBanking;
 import StateMachine.EndBank;
+import Visitor.AccountVisitorImpl;
 
 public class BankActions implements MyObservable {
 	private ArrayList<MyObserver> observers;
@@ -26,6 +27,8 @@ public class BankActions implements MyObservable {
 	
 	private BankState currentBankState;
 	
+	private AccountVisitorImpl accountVisitor;
+	
 	public BankActions()
 	{
 		observers = new ArrayList<MyObserver>();
@@ -36,6 +39,8 @@ public class BankActions implements MyObservable {
 		debitBankingState = new DebitBanking(this);
 		creditBankingState = new CreditBanking(this);
 		endBankState = new EndBank(this);
+		
+		accountVisitor = new AccountVisitorImpl();
 	}
 	
 	/**
@@ -109,6 +114,8 @@ public class BankActions implements MyObservable {
 	}
 	
 	public BankState getStartBankState() {return startBankState;}
+	public CreditBanking getCreditBankingState() { return (CreditBanking) creditBankingState; }
+	public DebitBanking getDebitBankingState() { return (DebitBanking) debitBankingState; }
 	
 	public BankBranch getBankBranch() {
 		return (BankBranch) bankBranch;
@@ -116,6 +123,10 @@ public class BankActions implements MyObservable {
 
 	public void setBankBranch(Proxy.Bank bankBranch) {
 		this.bankBranch = bankBranch;
+	}
+	
+	public AccountVisitorImpl getAccountVisitor() {
+		return accountVisitor;
 	}
 	
 	//-----------------------------OBSERVERS FUNCTIONS-----------------------------------\\

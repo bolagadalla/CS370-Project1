@@ -7,10 +7,6 @@ public class DebitCard implements Account {
     private double balance;
     
     public DebitCard(double balance) {
-        Random random = new Random();
-        int acc = random.nextInt(900000 - 100000) + 100000;
-
-        this.accountNumber = Integer.toString(acc);
         this.balance = balance;
     }
 
@@ -68,4 +64,10 @@ public class DebitCard implements Account {
     public String toString() {
     	return "Debit Card" + "\nAccount Number:\t" + accountNumber + "\nBalance:\t$" + balance;
     }
+    
+	@Override
+	public void generateAccountNumber() {
+		Random random = new Random();
+		accountNumber = Integer.toString(random.nextInt(900000 - 100000) + 100000); //Parse String
+	}
 }

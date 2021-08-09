@@ -3,6 +3,7 @@ package StateMachine;
 import java.util.ArrayList;
 
 import BankActions.*;
+import Singletons.Bank;
 import Singletons.TerminalPrinter;
 import Visitor.AccountElement;
 import Visitor.AccountVisitor;

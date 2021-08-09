@@ -12,7 +12,7 @@ public class AccountVisitorImpl implements AccountVisitor {
 
 	@Override
 	public void visit(DebitBanking debit) {
-		debit.getActions().setCreditBankingState();
+		debit.getActions().setDebitBankingState();
 	}
 
 }

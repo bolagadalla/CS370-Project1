@@ -21,5 +21,6 @@ public interface Account {
 
     void setCreditLimit(double creditLimit);
 
+    public void generateAccountNumber();
 
 }

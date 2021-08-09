@@ -6,9 +6,13 @@ public class AccountFactory {
     public Account createAccount(int accountType, int balance) {
         switch (accountType) {
             case 1:
-                return new DebitCard(balance); 
+            	DebitCard debitcard = new DebitCard(balance);
+            	debitcard.generateAccountNumber();
+                return debitcard;
             case 2:
-                return new CreditCard(balance);
+                CreditCard creditcard = new CreditCard(balance);
+                creditcard.generateAccountNumber();
+                return creditcard;
         }
 
         return null;

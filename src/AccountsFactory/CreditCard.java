@@ -8,13 +8,9 @@ public class CreditCard implements Account {
     private double creditLimit;
     
     public CreditCard(double balance) {
-        Random random = new Random();
-        int acc = random.nextInt(900000 - 100000) + 100000; // setup for accountNumber
         this.creditLimit = balance;
-        this.accountNumber = Integer.toString(acc); //Parse String
         this.balance = balance;
     }
-
 
     @Override
     public double getBalance() { //return balance
@@ -69,4 +65,10 @@ public class CreditCard implements Account {
     public String toString() {
     	return "Credit Card" + "\nAccount Number:\t" + accountNumber + "\nCredit Limit:\t$" + creditLimit;
     }
+
+	@Override
+	public void generateAccountNumber() {
+		Random random = new Random();
+		accountNumber = Integer.toString(random.nextInt(900000 - 100000) + 100000); //Parse String
+	}
 }
