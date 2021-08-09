@@ -125,7 +125,7 @@ public class CreateAccountAction implements Actions {
 	@Override
 	public String[] getMessage() {
 		User user = Bank.getCurrentUserUsingBank();
-		String[] log = {""}; // {user.getUsername(), " -- The new account : " + user.getAccountType().getAccountNumber() + " is created"};
+		String[] log = {user.getUsername(), " -- The new account : " + user.getAccountType().getAccountNumber() + " is created"};
 		return log;
 	}
 }

@@ -60,7 +60,7 @@ public class LoginAction implements Actions {
 	@Override
 	public String[] getMessage() {
 		User user = Bank.getCurrentUserUsingBank();
-		String[] log = {""}; // {user.getUsername(), " -- Login "};
-		return null;
+		String[] log = {user.getUsername(), " -- Login "};
+		return log;
 	}
 }

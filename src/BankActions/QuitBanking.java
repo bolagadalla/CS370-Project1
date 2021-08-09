@@ -1,5 +1,6 @@
 package BankActions;
 
+import Default.User;
 import Singletons.Bank;
 import Singletons.TerminalPrinter;
 
@@ -34,8 +35,9 @@ public class QuitBanking implements Actions {
 
 	@Override
 	public String[] getMessage() {
-		// TODO Auto-generated method stub
-		return null;
+		User user = Bank.getCurrentUserUsingBank();
+		String[] log = {user.getUsername(), "  Quit"};
+		return log;
 	}
 
 }

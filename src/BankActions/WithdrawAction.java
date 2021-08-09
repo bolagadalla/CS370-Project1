@@ -74,8 +74,8 @@ public class WithdrawAction implements Actions {
 	@Override
 	public String[] getMessage() {
 		User user = Bank.getCurrentUserUsingBank();
-		String[] log = {""};//  {user.getUsername(), "Withdraw -- The balance of "+ user.getAccountType().getAccountNumber() +" has been changed to " + user.getAccountType().getBalance()};
-		return null;
+		String[] log = {user.getUsername(), " Withdraw -- The balance of "+ user.getAccountType().getAccountNumber() +" has been changed to " + user.getAccountType().getBalance()};
+		return log;
 	}
 
 
