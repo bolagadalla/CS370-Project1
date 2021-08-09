@@ -11,6 +11,17 @@ public class User {
 	private String ssn;
 	private Pin pin;
 	
+	public User() {}
+	
+	public User(Account accountType, String[] name, String username, String creditScore, String ssn, Pin pin)
+	{
+		this.accountType = accountType;
+		this.name = name;
+		this.username = username;
+		this.creditScore = creditScore;
+		this.ssn = ssn;
+		this.pin = pin;
+	}
 
 	public Account getAccountType() {
 		return accountType;
@@ -58,6 +69,6 @@ public class User {
 	
 	@Override
 	public String toString() {
-		return "Account Type:\t" + accountType.toString() + "\nUsername:\t" + username + "\nPin:\t" + pin.getPinNum();
+		return "Account Holder: " + name[0] + " " + name[1] + "\nAccount Type:\t" + accountType.toString() +  "\nSS Number:\t" + ssn + "\nUsername:\t" + username + "\nPin Number:\t" + pin.getPinNum();
 	}
 }

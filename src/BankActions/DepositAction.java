@@ -33,7 +33,7 @@ public class DepositAction implements Actions {
 		atmProxy.atmDeposit(amountEntered);
 		TerminalPrinter.PrintLine("Thank you for your deposit of <$" + amountEntered + ">");
 		TerminalPrinter.PrintLine("Your new balance is <$" + atmProxy.getBalance() + ">");
-		bankActions.setBankingState();
+		bankActions.setDebitBankingState();
 	}
 
 	@Override

@@ -5,9 +5,7 @@ import java.util.Random;
 public class DebitCard implements Account {
     private String accountNumber;
     private double balance;
-    private boolean canTransfer;
-    private boolean canDeposit;
-
+    
     public DebitCard(double balance) {
         Random random = new Random();
         int acc = random.nextInt(900000 - 100000) + 100000;
@@ -28,22 +26,7 @@ public class DebitCard implements Account {
 
     @Override
     public boolean isCanTransfer() {
-        return false;
-    }
-
-    @Override
-    public void setCanTransfer(boolean canTransfer) {
-        this.canTransfer = canTransfer;
-    }
-
-    @Override
-    public boolean isCanDeposit() {
         return true;
-    }
-
-    @Override
-    public void SetCanDeposit(boolean canDeposit) {
-        this.canDeposit = canDeposit;
     }
 
     @Override
@@ -83,6 +66,6 @@ public class DebitCard implements Account {
     
     @Override
     public String toString() {
-    	return "Debit Card" + "\nAccount Number:\t" + accountNumber + "\nBalance:\t" + balance;
+    	return "Debit Card" + "\nAccount Number:\t" + accountNumber + "\nBalance:\t$" + balance;
     }
 }

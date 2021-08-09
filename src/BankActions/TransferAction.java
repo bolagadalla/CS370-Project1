@@ -23,7 +23,7 @@ public class TransferAction implements Actions {
 
 	@Override
 	public void Action() {
-		bankActions.setBankingState();
+		bankActions.setDebitBankingState();
 		// Ask for account number to transfer to
 		// Ask for the amount to transfer
 		// Check if we can do that.

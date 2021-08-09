@@ -28,19 +28,47 @@ public class WithdrawAction implements Actions {
 		atmProxy = new AtmProxy(Bank.getCurrentUserUsingBank().getPin(), bankActions.getBankBranch());
 		
 		Scanner scan = new Scanner(System.in);
+		if (Bank.getCurrentUserUsingBank().getAccountType().isCanTransfer()) {
+			DialogForDebit(scan);
+		}
+		else
+		{
+			DialogForCredit(scan);
+		}
+	}
+	
+	private void DialogForDebit(Scanner scan)
+	{
 		TerminalPrinter.PrintLine("Your current balance is <$" + atmProxy.getBalance() + ">");
 		TerminalPrinter.PrintLine("Enter amount to withdraw: ", false);
 		amountRequested = scan.nextInt();
 		if (Check()) {
 			TerminalPrinter.PrintLine("Sorry you don\'t have enough cash to make this withdraw.");
 			TerminalPrinter.PrintLine("Your current balance is <$" + atmProxy.getBalance() + ">");
-			bankActions.setBankingState();
+			bankActions.setDebitBankingState();
 			return;
 		}
 		TerminalPrinter.PrintLine("Thank you for your withdraw of <$" + amountRequested + ">");
 		bankActions.getBankBranch().setBalance(atmProxy.getBalance() - amountRequested);
 		TerminalPrinter.PrintLine("Your new balance is <$" + atmProxy.getBalance() + ">");
-		bankActions.setBankingState();
+		bankActions.setDebitBankingState();
+	}
+	
+	private void DialogForCredit(Scanner scan)
+	{
+		TerminalPrinter.PrintLine("Your current credit limit is <$" + atmProxy.getBalance() + ">");
+		TerminalPrinter.PrintLine("Enter amount to use: ", false);
+		amountRequested = scan.nextInt();
+		if (Check()) {
+			TerminalPrinter.PrintLine("Sorry you don\'t have enough cash to make this withdraw.");
+			TerminalPrinter.PrintLine("Your current credit limit is <$" + atmProxy.getBalance() + ">");
+			bankActions.setCreditBankingState();
+			return;
+		}
+		TerminalPrinter.PrintLine("Thank you for using your credit card - <$" + amountRequested + "> has been used.");
+		bankActions.getBankBranch().setBalance(atmProxy.getBalance() - amountRequested);
+		TerminalPrinter.PrintLine("Your new credit limit is <$" + atmProxy.getBalance() + ">");
+		bankActions.setCreditBankingState();
 	}
 
 	@Override

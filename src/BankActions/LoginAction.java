@@ -6,7 +6,7 @@ import Default.User;
 import Singletons.Bank;
 import Singletons.TerminalPrinter;
 
-public class LoginAction implements Actions{
+public class LoginAction implements Actions {
 	
 	BankActions bankActions;
 	private User user;
@@ -45,7 +45,8 @@ public class LoginAction implements Actions{
 		if (Check()) {
 			TerminalPrinter.PrintLine("Login Success!");
 			Bank.setCurrentUserUsingBank(user);
-			bankActions.setBankingState();
+			if (user.getAccountType().isCanTransfer()) bankActions.setDebitBankingState();
+			else bankActions.setCreditBankingState();
 		}
 		else
 		{

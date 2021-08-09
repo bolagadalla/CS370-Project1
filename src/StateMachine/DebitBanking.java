@@ -4,13 +4,15 @@ import java.util.ArrayList;
 
 import BankActions.*;
 import Singletons.TerminalPrinter;
+import Visitor.AccountElement;
+import Visitor.AccountVisitor;
 
-public class Banking implements BankState {
+public class DebitBanking implements BankState, AccountElement {
 
 	BankActions bankActions;
 	ArrayList<Actions> stateActions;
 	
-	public Banking(BankActions bankActions)
+	public DebitBanking(BankActions bankActions)
 	{
 		this.bankActions = bankActions;
 		stateActions = new ArrayList<Actions>();
@@ -19,6 +21,11 @@ public class Banking implements BankState {
 		stateActions.add(new TransferAction(bankActions));
 		stateActions.add(new QuitBanking(bankActions));
 	}
+	
+	public BankActions getActions()
+    {
+        return this.bankActions;
+    }
 	
 	@Override
 	public void BeginState() {
@@ -30,6 +37,11 @@ public class Banking implements BankState {
 	@Override
 	public void ActionTakenInState(Actions action) {
 		action.Action();
+	}
+
+	@Override
+	public void accept(AccountVisitor visitor) {
+		visitor.visit(this);
 	}
 
 }

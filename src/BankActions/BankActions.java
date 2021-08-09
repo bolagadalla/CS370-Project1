@@ -9,7 +9,8 @@ import Singletons.Bank;
 import Singletons.TerminalPrinter;
 import StateMachine.BankStart;
 import StateMachine.BankState;
-import StateMachine.Banking;
+import StateMachine.CreditBanking;
+import StateMachine.DebitBanking;
 import StateMachine.EndBank;
 
 public class BankActions implements MyObservable {
@@ -19,7 +20,8 @@ public class BankActions implements MyObservable {
 	private Proxy.Bank bankBranch;
 	
 	private BankState startBankState;
-	private BankState bankingState;
+	private BankState debitBankingState;
+	private BankState creditBankingState;
 	private BankState endBankState;
 	
 	private BankState currentBankState;
@@ -30,7 +32,9 @@ public class BankActions implements MyObservable {
 		actionsToTake = new ArrayList<Actions>();
 		startBankState = new BankStart(this);
 		setStartBankState();
-		bankingState = new Banking(this);
+		
+		debitBankingState = new DebitBanking(this);
+		creditBankingState = new CreditBanking(this);
 		endBankState = new EndBank(this);
 	}
 	
@@ -86,8 +90,15 @@ public class BankActions implements MyObservable {
 		Bank.setCurrentUserUsingBank(null);
 	}
 	
-	public void setBankingState() {
-		SetCurrentBankState(bankingState);
+	public void setDebitBankingState() {
+		SetCurrentBankState(debitBankingState);
+		if (bankBranch == null) {
+			setBankBranch(new BankBranch(Bank.getCurrentUserUsingBank()));	
+		}	
+	}
+	
+	public void setCreditBankingState() {
+		SetCurrentBankState(creditBankingState);
 		if (bankBranch == null) {
 			setBankBranch(new BankBranch(Bank.getCurrentUserUsingBank()));	
 		}	

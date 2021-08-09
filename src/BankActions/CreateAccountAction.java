@@ -3,6 +3,8 @@ package BankActions;
 import java.util.Scanner;
 
 import AccountsFactory.AccountFactory;
+import AccountsFactory.CreditCard;
+import AccountsFactory.DebitCard;
 import Default.User;
 import Proxy.Pin;
 import Singletons.Bank;
@@ -33,12 +35,19 @@ public class CreateAccountAction implements Actions {
 			TerminalPrinter.PrintLine("Account Successfuly Created\nYour Account Number is: " + newUser.getAccountType().getAccountNumber());
 			TerminalPrinter.PrintLine("Your new balance is: $<" + newUser.getAccountType().getBalance() + ">");
 			Bank.setCurrentUserUsingBank(newUser); // Sets the current user
-			bankActions.setBankingState(); // Goes to next state
+			if (newUser.getAccountType().isCanTransfer()) {
+				bankActions.setDebitBankingState(); // Goes to next state
+			}
+			else
+			{
+				bankActions.setCreditBankingState(); // Goes to next state
+			}
 		}
 		else
 		{
 			TerminalPrinter.ClearConsole();
 			TerminalPrinter.PrintLine("You already have an account with that SSN.\nPlease log into that account.");
+			newUser = new User();
 			bankActions.setStartBankState();
 		}
 		
@@ -60,13 +69,13 @@ public class CreateAccountAction implements Actions {
 		case 1: {
 			TerminalPrinter.PrintLine("Enter initial deposit: ", false);
 			int initialAmount = scan.nextInt();
-			newUser.setAccountType(accountFactory.createAccount(accountType, initialAmount));
+			newUser.setAccountType((DebitCard) accountFactory.createAccount(accountType, initialAmount));
 			break;
 		}
 		case 2: {
 			TerminalPrinter.PrintLine("Enter your current Credit Score: ", false);
 			int creditScore = scan.nextInt();
-			newUser.setAccountType(accountFactory.createAccount(accountType, CalculateCreditLimitAmount(creditScore)));
+			newUser.setAccountType((CreditCard) accountFactory.createAccount(accountType, CalculateCreditLimitAmount(creditScore)));
 			break;
 		}
         default: {

@@ -1,17 +1,16 @@
 package Singletons;
 
 import java.util.HashMap;
-
 import Default.User;
 
 public class Bank {
-	static Bank bank = new Bank();
 	static HashMap<String, User> users = new HashMap<String, User>();
+	static Bank bank = new Bank();
 	static User currentUserUsingBank;
 
 	private Bank() {
 		// READ JSON FILE FOR ALL THE ACCOUNTS
-		
+
 	}
 	
 	/**
@@ -20,7 +19,7 @@ public class Bank {
 	 * */
 	public static void saveBankState()
 	{
-		
+		printAccounts();
 	}
 	
 	public static Bank getInstance()
@@ -42,19 +41,28 @@ public class Bank {
 	{
 		// Loops through the users to see if there are any user with the same SSN and account type that they are creating
 		for (User s : users.values()) {
-			if (s.getSSN() == user.getSSN() && s.getAccountType() == user.getAccountType()) {
+			if (s.getSSN() == user.getSSN() && s.getAccountType().isCanTransfer() == user.getAccountType().isCanTransfer()) {
 				return false;
 			}
 		}
 		
 		// Makes sure the account number is not in use
-		if (!users.containsKey(userID)) {
+		if (!checkUserExist(userID)) {
 			users.put(userID, user);
 			saveBankState();
 			return true;
 		}
 		
 		return false;
+	}
+	
+	private static void printAccounts()
+	{
+		System.out.println();
+		for (User u : users.values()) {
+			System.out.println(u.toString());
+			System.out.println();
+		}
 	}
 
 	public static User getCurrentUserUsingBank() {

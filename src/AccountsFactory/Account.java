@@ -9,12 +9,6 @@ public interface Account {
 
     boolean isCanTransfer();
 
-    void setCanTransfer(boolean canTransfer);
-
-    boolean isCanDeposit();
-
-    void SetCanDeposit(boolean canDeposit);
-
     String getAccountNumber();
 
     void setAccountNumber(String accountNumber);

@@ -6,10 +6,7 @@ public class CreditCard implements Account {
     private String accountNumber;
     private double balance;
     private double creditLimit;
-    private boolean canTransfer;
-    private boolean canDeposit;
-
-
+    
     public CreditCard(double balance) {
         Random random = new Random();
         int acc = random.nextInt(900000 - 100000) + 100000; // setup for accountNumber
@@ -30,23 +27,8 @@ public class CreditCard implements Account {
     }
 
     @Override
-    public boolean isCanDeposit() { //CreditCard can't deposit money into
-        return false;
-    }
-
-    @Override
-    public void SetCanDeposit(boolean canDeposit) {
-        this.canDeposit = canDeposit;
-    }
-
-    @Override
     public boolean isCanTransfer() { //CreditCard can't transfer money to another.
         return false;
-    }
-
-    @Override
-    public void setCanTransfer(boolean canTransfer) {
-        this.canTransfer = canTransfer;
     }
 
     @Override
@@ -85,6 +67,6 @@ public class CreditCard implements Account {
     
     @Override
     public String toString() {
-    	return "Credit Card" + "\nAccount Number:\t" + accountNumber + "\nCredit Limit:\t" + creditLimit;
+    	return "Credit Card" + "\nAccount Number:\t" + accountNumber + "\nCredit Limit:\t$" + creditLimit;
     }
 }

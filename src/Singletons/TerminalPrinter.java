@@ -4,7 +4,7 @@ import java.util.concurrent.TimeUnit;
 
 public class TerminalPrinter {
 	static TerminalPrinter printer = new TerminalPrinter();
-	static int numMilSec = 30;
+	static int numMilSec = 5;
 	
 	private TerminalPrinter() {}
 	
