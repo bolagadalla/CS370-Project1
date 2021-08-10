@@ -56,10 +56,14 @@ public class LoginAction implements Actions {
 			bankActions.setStartBankState();
 		}
 	}
-
+	
 	@Override
 	public String[] getMessage() {
 		User user = Bank.getCurrentUserUsingBank();
+		if(user == null) {
+			String [] error = {"System -- ","Login fails"};
+			return error;
+		}
 		String[] log = {user.getUsername(), " -- Login "};
 		return log;
 	}
