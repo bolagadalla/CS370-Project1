@@ -12,8 +12,7 @@ public class Bank {
 	static User currentUserUsingBank;
 
 	private Bank() {
-		User user = new User(new DebitCard(1000), new String[] {"John", "Smith"}, "johnsmith90", "", "123456789", new Pin(1234));
-		user.getAccountType().generateAccountNumber();
+		User user = new User(new DebitCard("0", 1000), new String[] {"John", "Smith"}, "johnsmith90", "", "123456789", new Pin(1234));
 		users.put(user.getAccountType().getAccountNumber(), user);
 	}
 	

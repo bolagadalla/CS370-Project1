@@ -6,7 +6,13 @@ public class DebitCard implements Account {
     private String accountNumber;
     private double balance;
     
-    public DebitCard(double balance) {
+    public DebitCard(double balance)
+    {
+    	this.balance = balance;
+    }
+    
+    public DebitCard(String accountNumber, double balance) {
+    	this.accountNumber = accountNumber;
         this.balance = balance;
     }
 
