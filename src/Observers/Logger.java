@@ -34,6 +34,10 @@ public class Logger implements MyObserver{
 		transactionLog.get(user).add(action + " -- " +  LocalDateTime.now().toString().substring(0,19));
 		
 	}
+	
+	public Stack<String> getStackLog(String key){
+		return transactionLog.get(key);
+	}
 	/*
 	 * print all transaction
 	 */
