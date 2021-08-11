@@ -129,7 +129,7 @@ public class CreateAccountAction implements Actions {
 		User user = Bank.getCurrentUserUsingBank();
 		String[] log;
 		if (user == null) {
-			log = new String[] {"", "Couldn\'t Create Account"};
+			log = new String[] {"System --", " Ready"};
 		}
 		else log = new String[] {user.getUsername(), " -- The new account : " + user.getAccountType().getAccountNumber() + " is created"};
 		return log;
