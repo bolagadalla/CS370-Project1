@@ -1,4 +1,4 @@
-package Proxy;
+package Unit_test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -7,6 +7,8 @@ import org.junit.jupiter.api.Test;
 import AccountsFactory.Account;
 import AccountsFactory.AccountFactory;
 import Default.User;
+import Proxy.AtmProxy;
+import Proxy.BankBranch;
 
 class ProxyTest {
 	
