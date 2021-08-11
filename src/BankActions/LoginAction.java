@@ -61,7 +61,7 @@ public class LoginAction implements Actions {
 	public String[] getMessage() {
 		User user = Bank.getCurrentUserUsingBank();
 		if(user == null) {
-			String [] error = {"System -- ","Login fails"};
+			String [] error = {"System -- ","Credentials are incorrect"};
 			return error;
 		}
 		String[] log = {user.getUsername(), " -- Login "};
