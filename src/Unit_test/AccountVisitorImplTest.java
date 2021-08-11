@@ -1,10 +1,16 @@
-package Main.StateMachine;
+package Unit_test;
 
-import Main.AccountsFactory.Account;
-import Main.AccountsFactory.AccountFactory;
-import Main.BankActions.BankActions;
-import Main.Default.User;
-import Main.Proxy.Pin;
+import static org.junit.Assert.assertSame;
+
+import AccountsFactory.Account;
+import AccountsFactory.AccountFactory;
+import BankActions.BankActions;
+import Default.User;
+import Proxy.Pin;
+import Singletons.Bank;
+import StateMachine.CreditBanking;
+import StateMachine.DebitBanking;
+import Visitor.AccountVisitorImpl;
 
 class AccountVisitorImplTest {
 
@@ -27,11 +33,13 @@ class AccountVisitorImplTest {
         user.setSSN("");
         user.setUsername("Credit");
         user.setPin(new Pin(1));
-
+        user.getAccountType().generateAccountNumber();
+        Bank.AddNewUser(user.getAccountType().getAccountNumber(), user);
         BankActions bankActions = new BankActions();
 
-        CreditBanking credit = new CreditBanking(user,bankActions);
+        CreditBanking credit = new CreditBanking(bankActions);
         credit.accept(visitor);
+        assertSame(bankActions.getCreditBankingState(), bankActions.GetCurrentBankState());
     }
 
     @org.junit.jupiter.api.Test
@@ -43,10 +51,12 @@ class AccountVisitorImplTest {
         user.setSSN("");
         user.setUsername("Debit");
         user.setPin(new Pin(2));
-
+        user.getAccountType().generateAccountNumber();
+        Bank.AddNewUser(user.getAccountType().getAccountNumber(), user);
         BankActions bankActions = new BankActions();
 
-        DebitBanking debit = new DebitBanking(user,bankActions);
+        DebitBanking debit = new DebitBanking(bankActions);
         debit.accept(visitor);
+        assertSame(bankActions.getDebitBankingState(), bankActions.GetCurrentBankState());
     }
 }

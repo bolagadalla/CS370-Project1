@@ -45,4 +45,9 @@ public class DebitBanking implements BankState, AccountElement {
 		visitor.visit(this);
 	}
 
+	@Override
+	public ArrayList<Actions> StateActions() {
+		return stateActions;
+	}
+
 }

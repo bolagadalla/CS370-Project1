@@ -39,4 +39,9 @@ public class BankStart implements BankState {
 	public void ActionTakenInState(Actions action) {
 		action.Action();
 	}
+
+	@Override
+	public ArrayList<Actions> StateActions() {
+		return stateActions;
+	}
 }

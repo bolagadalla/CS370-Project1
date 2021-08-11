@@ -1,7 +1,10 @@
 package Singletons;
 
 import java.util.HashMap;
+
+import AccountsFactory.DebitCard;
 import Default.User;
+import Proxy.Pin;
 
 public class Bank {
 	static HashMap<String, User> users = new HashMap<String, User>();
@@ -9,8 +12,9 @@ public class Bank {
 	static User currentUserUsingBank;
 
 	private Bank() {
-		// READ JSON FILE FOR ALL THE ACCOUNTS
-
+		User user = new User(new DebitCard(1000), new String[] {"John", "Smith"}, "johnsmith90", "", "123456789", new Pin(1234));
+		user.getAccountType().generateAccountNumber();
+		users.put(user.getAccountType().getAccountNumber(), user);
 	}
 	
 	/**
@@ -19,7 +23,7 @@ public class Bank {
 	 * */
 	public static void saveBankState()
 	{
-		printAccounts();
+		
 	}
 	
 	public static Bank getInstance()

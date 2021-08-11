@@ -88,6 +88,7 @@ public class BankActions implements MyObservable {
 		actionsToTake = actions;
 	}
 	public int ActionsCount() { return actionsToTake.size(); }
+	public ArrayList<Actions> getActions() { return actionsToTake; } 
 	public void setStartBankState() {
 		SetCurrentBankState(startBankState);
 		setBankBranch(null);

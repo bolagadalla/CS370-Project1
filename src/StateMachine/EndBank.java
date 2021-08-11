@@ -1,5 +1,7 @@
 package StateMachine;
 
+import java.util.ArrayList;
+
 import BankActions.Actions;
 import BankActions.BankActions;
 import Singletons.Bank;
@@ -24,6 +26,11 @@ public class EndBank implements BankState {
 	@Override
 	public void ActionTakenInState(Actions action) {
 		// TODO Auto-generated method stub
+	}
+
+	@Override
+	public ArrayList<Actions> StateActions() {
+		return new ArrayList<Actions>(0);
 	}
 
 }
