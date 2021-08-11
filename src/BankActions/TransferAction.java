@@ -1,7 +1,11 @@
 package BankActions;
 
+import java.util.Scanner;
+
 import Default.User;
+import Proxy.BankBranch;
 import Singletons.Bank;
+import Singletons.TerminalPrinter;
 
 public class TransferAction implements Actions {
 
@@ -24,25 +28,47 @@ public class TransferAction implements Actions {
 
 	@Override
 	public void Action() {
-		bankActions.setDebitBankingState();
-		// Ask for account number to transfer to
-		// Ask for the amount to transfer
-		// Check if we can do that.
-		// If we can then we complete the transfer
-			// Add amountToTransfer to the account you're transferring to 
-			// Subtract amountToTransfer from currentUserUsingBank account
-			// Print transfer is complete
-			// Go to banking state
-		// Otherwise print whether the user doesnt exist or the amount is too large
-		// Go to banking state
+		Scanner scan = new Scanner(System.in);
+		TerminalPrinter.PrintLine("Enter account number of recipient: ", false);
+		accountNumberToTransfer = Integer.toString(scan.nextInt());
 		
+		if (!Bank.checkUserExist(accountNumberToTransfer) || accountNumberToTransfer == Bank.getCurrentUserUsingBank().getAccountType().getAccountNumber()) {
+			if (!Bank.checkUserExist(accountNumberToTransfer)) TerminalPrinter.PrintLine("Sorry this account doesn\'t exist");
+			if (accountNumberToTransfer == Bank.getCurrentUserUsingBank().getAccountType().getAccountNumber()) TerminalPrinter.PrintLine("You can\'t transfer money to yourself silly.");
+			goToBanking();
+		}
 		
+		TerminalPrinter.PrintLine("Enter amount to transfer: ", false);
+		amountToTransfer = scan.nextInt();
+		if (Check()) {
+			// Subtracts amount from current user
+			bankActions.getBankBranch().setBalance(bankActions.getBankBranch().getBalance() - amountToTransfer); 
+			Bank.getUser(accountNumberToTransfer).getAccountType().addBalance(amountToTransfer);
+			TerminalPrinter.PrintLine("Transfer to account <" + accountNumberToTransfer + "> of the amount <$" + amountToTransfer + "> was successful");
+			goToBanking();
+		}
+		else
+		{
+			TerminalPrinter.PrintLine("Sorry, you don\'t have the required amount to complete this transaction.");
+			goToBanking();
+		}
+	}
+	
+	private void goToBanking()
+	{
+		if (Bank.getCurrentUserUsingBank().getAccountType().isCanTransfer()) {
+			bankActions.getDebitBankingState().accept(bankActions.getAccountVisitor());
+		}
+		else
+		{
+			bankActions.getCreditBankingState().accept(bankActions.getAccountVisitor());
+		}
 	}
 
 	@Override
 	public String[] getMessage() {
 		User user = Bank.getCurrentUserUsingBank();
-		String[] log = {user.getUsername(), "  Transfer"};
+		String[] log = {user.getUsername(), "  Transfer of <$" + amountToTransfer + "> is complete"};
 		return log;
 	}
 

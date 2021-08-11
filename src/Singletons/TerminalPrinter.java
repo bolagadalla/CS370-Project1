@@ -128,8 +128,8 @@ public class TerminalPrinter {
 	public static void ClearConsole()
 	{
 		// This is a command that clears the console once it's printed
-		System.out.println("\033[H\033[2J");
-		System.out.println("\f");
+//		System.out.println("\033[H\033[2J");
+		System.out.println();
 	}
 	
 	private static void Typer(int milSecondsBetweenChars, String line)

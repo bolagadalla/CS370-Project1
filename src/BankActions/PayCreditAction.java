@@ -1,7 +1,10 @@
 package BankActions;
 
+import java.util.Scanner;
+
 import Default.User;
 import Singletons.Bank;
+import Singletons.TerminalPrinter;
 
 public class PayCreditAction implements Actions {
 
@@ -19,11 +22,23 @@ public class PayCreditAction implements Actions {
 
 	@Override
 	public void Action() {
-		// Print Enter amount you would like to pay from your credit card
-		// Store that amount into a variable
-		// Subtract it from currentUserUsingBank account Credit balance
-		// Print amount paid successful
-		// Go to banking state
+		Scanner scan = new Scanner(System.in);
+		TerminalPrinter.PrintLine("Enter amount you would like to pay for credit card: ", false);
+		int amountToPay = scan.nextInt();
+		Bank.getCurrentUserUsingBank().getAccountType().setBalance(Bank.getCurrentUserUsingBank().getAccountType().getBalance() + amountToPay);
+		TerminalPrinter.PrintLine("Payment has been made, thank you!");
+		goToBanking();
+	}
+	
+	private void goToBanking()
+	{
+		if (Bank.getCurrentUserUsingBank().getAccountType().isCanTransfer()) {
+			bankActions.getDebitBankingState().accept(bankActions.getAccountVisitor());
+		}
+		else
+		{
+			bankActions.getCreditBankingState().accept(bankActions.getAccountVisitor());
+		}
 	}
 
 	@Override

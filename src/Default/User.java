@@ -11,7 +11,12 @@ public class User {
 	private String ssn;
 	private Pin pin;
 	
-	public User() {}
+	public User() {
+		name = new String[2];
+		username = "";
+		creditScore = "";
+		ssn = "";
+	}
 
 	public Account getAccountType() {
 		return accountType;

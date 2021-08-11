@@ -39,21 +39,19 @@ public class Bank {
 	
 	private static boolean checkSSNUserExist(User user)
 	{
-		boolean flag = true;
 		// Loops through the users to see if there are any user with the same SSN and account type that they are creating
 		for (User s : users.values()) {
-			if (s.getSSN() == user.getSSN() && s.getAccountType().isCanTransfer() == user.getAccountType().isCanTransfer()) {
-				flag = false;
-				break;
+			if (s.getSSN() == user.getSSN() && (s.getAccountType().isCanTransfer() == user.getAccountType().isCanTransfer())) {
+				return true;
 			}
 		}
-		return flag;
+		return false;
 	}
 	
 	public static boolean AddNewUser(String userID, User user)
 	{
 		// Makes sure the account number is not in use
-		if (!checkUserExist(userID) && checkSSNUserExist(user)) {
+		if (!checkUserExist(userID) && !checkSSNUserExist(user)) {
 			users.put(userID, user);
 			saveBankState();
 			return true;

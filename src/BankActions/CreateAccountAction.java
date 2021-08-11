@@ -35,6 +35,7 @@ public class CreateAccountAction implements Actions {
 			TerminalPrinter.PrintLine("Account Successfuly Created\nYour Account Number is: " + newUser.getAccountType().getAccountNumber());
 			TerminalPrinter.PrintLine("Your new balance is: $<" + newUser.getAccountType().getBalance() + ">");
 			Bank.setCurrentUserUsingBank(newUser); // Sets the current user
+			
 			if (newUser.getAccountType().isCanTransfer()) {
 				bankActions.getDebitBankingState().accept(bankActions.getAccountVisitor());
 			}
@@ -42,6 +43,7 @@ public class CreateAccountAction implements Actions {
 			{
 				bankActions.getCreditBankingState().accept(bankActions.getAccountVisitor());
 			}
+			newUser = new User();
 		}
 		else
 		{
@@ -125,7 +127,11 @@ public class CreateAccountAction implements Actions {
 	@Override
 	public String[] getMessage() {
 		User user = Bank.getCurrentUserUsingBank();
-		String[] log = {user.getUsername(), " -- The new account : " + user.getAccountType().getAccountNumber() + " is created"};
+		String[] log;
+		if (user == null) {
+			log = new String[] {"", "Couldn\'t Create Account"};
+		}
+		else log = new String[] {user.getUsername(), " -- The new account : " + user.getAccountType().getAccountNumber() + " is created"};
 		return log;
 	}
 }

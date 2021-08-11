@@ -35,8 +35,8 @@ public class QuitBanking implements Actions {
 
 	@Override
 	public String[] getMessage() {
-		User user = Bank.getCurrentUserUsingBank();
-		String[] log = {user.getUsername(), "  Quit"};
+//		User user = Bank.getCurrentUserUsingBank();
+		String[] log = {"", "You Quit The Bank"};
 		return log;
 	}
 

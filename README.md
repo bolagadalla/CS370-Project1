@@ -15,9 +15,7 @@ This is a group project for our CSCI 370 at Queens College with professor Aryeh 
 
 - @bolagadalla Implemented the State design pattern
 	- Implemented State Design to manage the different state the bank will be in.
-	- Implemented all the actions in the BankActions except these:
-  		- TransferAction
-  		- PayCreditAction
+	- Implemented all the actions in the BankActions.
 	- Implemented the BankStart state, Banking State, EndBank State functionalities
 	- Added Some Code in the TerminalPrinter
 

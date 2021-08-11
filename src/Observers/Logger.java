@@ -24,7 +24,7 @@ public class Logger implements MyObserver{
 	 */
 	public void update(String action, String user) {
 		
-		TerminalPrinter.PrintLine("\nLogger notification: " + action + user+"\n");
+		TerminalPrinter.PrintLine("\nLogger notification: " + action + user);
 		//if the key is inserted at first, create new stack
 		
 		if(!transactionLog.containsKey(user)) {
@@ -40,7 +40,7 @@ public class Logger implements MyObserver{
 	public void printAll() {
 		TerminalPrinter.PrintLine("Name : Transaction");
 		transactionLog.forEach((key, value) -> {
-			TerminalPrinter.PrintLine(key + " : " + value + "\n");
+			TerminalPrinter.PrintLine(key + " : " + value);
 		});
 	}
 	/*
